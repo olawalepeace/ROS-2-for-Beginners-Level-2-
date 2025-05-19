@@ -7,7 +7,9 @@
     <let name="gazebo_pkg_path"
          value="$(find-pkg-share gazebo_ros)/launch/gazebo.launch.py" />
          
-	<include file="$(var gazebo_pkg_path)" />
+	<include file="$(var gazebo_pkg_path)" >
+        <arg name="world" value="$(find-pkg-share final_project)/world/ware_" />
+    </include>
     <!-- opening nodes -->
     <node pkg="robot_state_publisher" exec="robot_state_publisher">
         <param name="robot_description"

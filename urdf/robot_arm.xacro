@@ -29,7 +29,7 @@
     <joint name="main_base_to_arm_base" type="fixed">
         <parent link="main_base" />
         <child link="arm_base" />
-        <origin xyz="0 0 ${0.5*(main_base_height+arm_base_height)}" rpy="0 0 0" />
+        <origin xyz="${main_base_length/4} 0 ${0.5*(main_base_height+arm_base_height)}" rpy="0 0 0" />
     </joint>
 
     <link name="fore_arm">
@@ -44,10 +44,10 @@
             <geometry>
                 <cylinder radius="${arm_radius}" length="${arm_length}" />
             </geometry>
-            <origin xyz="0 0 0" rpy="0 0 0" />
+            <origin xyz="0 0 ${0.5*arm_length}" rpy="0 0 0" />
         </collision>
         <xacro:cylinder_inertial m="${arm_mass}" r="${arm_radius}" l="${arm_length}" 
-                                     xyz="0 0 0" rpy="0 0 0" />
+                                     xyz="0 0 ${0.5*arm_length}" rpy="0 0 0" />
     </link>
     <joint name="forearm_to_base" type="revolute">
         <parent link="arm_base" />
@@ -72,7 +72,7 @@
             <origin xyz="0 0 ${0.5*arm_length}" rpy="0 0 0" />
         </collision>
         <xacro:cylinder_inertial m="${arm_mass}" r="${arm_radius}" l="${arm_length}" 
-                                     xyz="0 0 0" rpy="0 0 0" />
+                                     xyz="0 0 ${0.5*arm_length}" rpy="0 0 0" />
     </link>
     <joint name="hand_to_forearm" type="revolute">
         <parent link="fore_arm" />
@@ -82,4 +82,19 @@
         <axis xyz="0 1 0" />
         <limit effort="100" velocity="100" lower="0" upper="${pi/2}" />
     </joint>
+    
+    <gazebo>
+        <plugin name="joint_state_publisher_controller" filename="libgazebo_ros_joint_state_publisher.so">
+            <update_rate>10</update_rate>
+            <joint_name>forearm_to_base</joint_name>
+            <joint_name>hand_to_forearm</joint_name>
+        </plugin>
+    </gazebo>
+
+    <gazebo>
+        <plugin name="joint_pose_trajectory_controller" filename="libgazebo_ros_joint_pose_trajectory.so">
+            <update_rate>2</update_rate>
+        </plugin>
+    </gazebo>
+
 </robot>

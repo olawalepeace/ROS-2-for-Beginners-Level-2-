@@ -19,7 +19,7 @@
                 <origin xyz="0 0 0" rpy="0 0 0" />
             </geometry>
         </collision>
-        <box_inertial m="0.2" l="${camera_length}" w="${camera_width}" h="${camera_height}" xyz="0 0 0" rpy="0 0 0" />
+        <xacro:box_inertial m="0.2" l="${camera_length}" w="${camera_width}" h="${camera_height}" xyz="0 0 0" rpy="0 0 0" />
     </link>
 
     <joint name="base_camera" type="fixed" >
@@ -30,5 +30,13 @@
 
     <gazebo reference="camera" >
         <material>Gazebo/Black</material>
+        <sensor name="camera_sensor" type="camera">
+            <pose>0 0 0 0 0 0</pose>
+            <visualize>true</visualize>
+            <update_rate>10.0</update_rate>
+            <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
+                <frame_name>camera</frame_name>
+            </plugin>
+        </sensor>
     </gazebo>
 </robot>

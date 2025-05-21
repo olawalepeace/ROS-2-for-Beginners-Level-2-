@@ -27,16 +27,4 @@
         <child link="camera" />
         <origin xyz="${0.5*(main_base_length+camera_length)} 0 0" rpy="0 0 0" />
     </joint>
-
-    <gazebo reference="camera" >
-        <material>Gazebo/Black</material>
-        <sensor name="camera_sensor" type="camera">
-            <pose>0 0 0 0 0 0</pose>
-            <visualize>true</visualize>
-            <update_rate>10.0</update_rate>
-            <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
-                <frame_name>camera</frame_name>
-            </plugin>
-        </sensor>
-    </gazebo>
 </robot>
